@@ -19,6 +19,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     min_count           = (var.default_node_pool_enable_auto_scaling ? var.default_node_pool_node_min_count : null)
     max_count           = (var.default_node_pool_enable_auto_scaling ? var.default_node_pool_node_max_count : null)
     availability_zones  = var.default_node_pool_availability_zones
+    vnet_subnet_id      = var.default_node_pool_vnet_subnet_id
     # disabled due to AKS bug	
     #tags                = var.tags
   }

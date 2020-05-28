@@ -83,6 +83,11 @@ variable "default_node_pool_availability_zones" {
   default     = [1,2,3]
 }
 
+variable "default_node_pool_vnet_subnet_id" {
+  description = "default node pool vnet subnet id"
+  type        = string
+  default     = null
+}
 variable "enable_aad_pod_identity" {
   description = "enable Azure AD pod identity enable kubernetes dashboard"
   type        = bool
