@@ -24,6 +24,7 @@ This module will create a managed Kubernetes cluster using Azure Kubernetes Serv
 | default\_node\_pool\_node\_max\_count | enable default node pool auto scaling (only valid with auto scaling) | `number` | `5` | no |
 | default\_node\_pool\_node\_min\_count | enable default node pool auto scaling (only valid for auto scaling) | `number` | `1` | no |
 | default\_node\_pool\_vm\_size | default node pool VM size | `string` | `"Standard_D2s_v3"` | no |
+| default\_node\_pool\_vnet\_subnet\_id | default node pool vnet subnet id | `string` | n/a | yes |
 | enable\_aad\_pod\_identity | enable Azure AD pod identity enable kubernetes dashboard | `bool` | `true` | no |
 | enable\_kube\_dashboard | enable kubernetes dashboard | `bool` | `true` | no |
 | kubernetes\_version | kubernetes version | `string` | `"1.16.7"` | no |
