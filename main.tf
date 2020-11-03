@@ -40,6 +40,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     kube_dashboard {
       enabled = var.enable_kube_dashboard
     }
+    http_application_routing {
+      enabled = true
+    }
   }
 
   dynamic "windows_profile" {
@@ -63,9 +66,5 @@ resource "azurerm_kubernetes_cluster" "aks" {
       client_id     = var.service_principal_id
       client_secret = var.service_principal_secret
     }
-  }
-  
-  http_application_routing {
-    enabled = true
   }
 }
