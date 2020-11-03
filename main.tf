@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   tags                 = var.tags
 
   kubernetes_version = var.kubernetes_version
-  
+
   network_profile {
     network_plugin       = var.network_plugin
   }
@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     availability_zones  = var.default_node_pool_availability_zones
     vnet_subnet_id      = (var.aks_managed_vnet ? null : var.default_node_pool_subnet.id)
 
-    # disabled due to AKS bug	
+    # disabled due to AKS bug
     #tags                = var.tags
   }
 
@@ -63,5 +63,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
       client_id     = var.service_principal_id
       client_secret = var.service_principal_secret
     }
+  }
+
+  http_application_routing {
+    enabled = true
   }
 }
