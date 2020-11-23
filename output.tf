@@ -22,7 +22,7 @@ output "effective_outbound_ips_ids" {
   description = "The outcome (resource IDs) of the specified arguments."
   value       = azurerm_kubernetes_cluster.aks.network_profile[0].load_balancer_profile[0].effective_outbound_ips
 }
-  
+
 output "kube_config_raw" {
   description  = "raw kubernetes config to be used by kubectl and other compatible tools"
   value        = azurerm_kubernetes_cluster.aks.kube_config_raw
@@ -61,4 +61,9 @@ output "cluster_ca_certificate" {
 output "principal_id" {
   description  = "id of the principal used by this managed kubernetes cluster"
   value        = (var.use_service_principal ? data.azuread_service_principal.aks.0.id : azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id)
+}
+
+output "http_app_routing_zone_name" {
+  description = "The DNS zone name created by the http_application_routing add on for AKS"
+  value       = azurerm_kubernetes_cluster.aks.http_application_routing_zone_name 
 }
