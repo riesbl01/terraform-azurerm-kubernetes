@@ -67,8 +67,4 @@ resource "azurerm_kubernetes_cluster" "aks" {
       client_secret = var.service_principal_secret
     }
   }
-
-  http_application_routing {
-    enabled = true
-  }
 }
