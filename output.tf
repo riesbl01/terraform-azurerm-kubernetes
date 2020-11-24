@@ -65,5 +65,5 @@ output "principal_id" {
 
 output "http_app_routing_zone_name" {
   description = "The DNS zone name created by the http_application_routing add on for AKS"
-  value       = azurerm_kubernetes_cluster.aks.addon_profile[1].http_application_routing[0].http_application_routing_zone_name
+  value       = azurerm_kubernetes_cluster.aks.addon_profile[0].http_application_routing[0].http_application_routing_zone_name
 }
