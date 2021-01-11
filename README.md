@@ -59,6 +59,7 @@ This module will create a managed Kubernetes cluster using Azure Kubernetes Serv
 | password | kubernetes password |
 | principal\_id | id of the principal used by this managed kubernetes cluster |
 | username | kubernetes username |
+| http_app_routing_zone_name | The DNS zone name created by the http_application_routing add on for AKS |
 <!--- END_TF_DOCS --->
 
 ## Example
