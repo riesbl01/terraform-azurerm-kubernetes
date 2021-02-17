@@ -9,6 +9,21 @@ resource "azurerm_role_assignment" "subnet_network_contributor" {
   principal_id         = data.azuread_service_principal.aks[0].object_id
 }
 
+resource "azurerm_user_assigned_identity" "route_table_uai" {
+  count               = var.aks_managed_vnet ? 0 : 1
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  name = "uai-${var.names.resource_group_type}-${var.names.product_name}-${var.names.environment}-${var.names.location}-route-table-rw"
+}
+
+resource "azurerm_role_assignment" "route_table_role_network_contributor" {
+  count                = var.aks_managed_vnet ? 0 : 1
+  scope                = format("/subscriptions/%s/resourceGroups/%s", var.subscription, var.resource_group_name)
+  role_definition_name = "Network Contributor"
+  principal_id         = azurerm_user_assigned_identity.route_table_uai.principal_id
+}
+
 resource "azurerm_kubernetes_cluster" "aks" {
   name                 = local.cluster_name
   location             = var.location
