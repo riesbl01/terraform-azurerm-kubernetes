@@ -1,4 +1,9 @@
 # Basics
+variable "subscription" {
+  description = "subscription to use when defining scope in UAI"
+  type        = string
+}
+
 variable "use_service_principal" {
   description = "use service principal (false will use SystemAssigned identity)"
   type        = bool
