@@ -5,6 +5,11 @@ variable "use_service_principal" {
   default     = false
 }
 
+variable "user_assigned_identity_id" {
+  description = "The id of the user assigned identity"
+  type        = string
+}
+
 variable "service_principal_id" {
   description = "Azure Service Principal ID"
   type        = string
