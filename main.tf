@@ -9,11 +9,15 @@ resource "azurerm_role_assignment" "subnet_network_contributor" {
   principal_id         = data.azuread_service_principal.aks[0].object_id
 }
 
+resource "azurerm_private_dns_zone" "esp_private_dns_zone" {
+  name                = format("privatelink.%s.azmk8s.io", var.location)
+  resource_group_name = var.resource_group_name
+}
+
 resource "azurerm_user_assigned_identity" "route_table_uai" {
   count               = var.aks_managed_vnet ? 0 : 1
   resource_group_name = var.resource_group_name
   location            = var.location
-
   name = "uai-${var.names.resource_group_type}-${var.names.product_name}-${var.names.environment}-${var.names.location}-route-table-rw"
 }
 
@@ -21,6 +25,13 @@ resource "azurerm_role_assignment" "route_table_role_network_contributor" {
   count                = var.aks_managed_vnet ? 0 : 1
   scope                = format("/subscriptions/%s/resourceGroups/%s", var.subscription, var.resource_group_name)
   role_definition_name = "Network Contributor"
+  principal_id         = azurerm_user_assigned_identity.route_table_uai[0].principal_id
+}
+
+resource "azurerm_role_assignment" "priavte_dns_zone_contributor" {
+  count                = var.aks_managed_vnet ? 0 : 1
+  scope                = azurerm_private_dns_zone.esp_private_dns_zone.id
+  role_definition_name = "Private DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.route_table_uai[0].principal_id
 }
 
@@ -32,6 +43,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   tags                 = var.tags
 
   kubernetes_version = var.kubernetes_version
+  private_cluster_enabled = true
+  private_dns_zone_id     = azurerm_private_dns_zone.esp_private_dns_zone.id
 
   network_profile {
     network_plugin       = var.network_plugin
