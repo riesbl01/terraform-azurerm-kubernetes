@@ -56,7 +56,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       enabled = var.enable_kube_dashboard
     }
     http_application_routing {
-      enabled = true
+      enabled = var.enable_http_application_routing
     }
   }
 
