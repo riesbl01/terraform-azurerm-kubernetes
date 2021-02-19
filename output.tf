@@ -63,7 +63,3 @@ output "principal_id" {
   value        = (var.use_service_principal ? data.azuread_service_principal.aks.0.id : azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id)
 }
 
-output "http_app_routing_zone_name" {
-  description = "The DNS zone name created by the http_application_routing add on for AKS"
-  value       = azurerm_kubernetes_cluster.aks.addon_profile[0].http_application_routing[0].http_application_routing_zone_name
-}
