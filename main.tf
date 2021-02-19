@@ -19,7 +19,7 @@ resource "azurerm_user_assigned_identity" "route_table_uai" {
 
 resource "azurerm_role_assignment" "route_table_role_network_contributor" {
   count                = var.aks_managed_vnet ? 0 : 1
-  scope                = format("/subscriptions/%s/resourceGroups/%s", var.subscription, var.resource_group_name)
+  scope                = var.route_table_id
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_user_assigned_identity.route_table_uai[0].principal_id
 }
