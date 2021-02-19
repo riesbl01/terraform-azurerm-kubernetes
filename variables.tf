@@ -152,12 +152,6 @@ variable "enable_kube_dashboard" {
   default     = true
 }
 
-variable "enable_http_application_routing" {
-  description = "enable http application routing on the AKS"
-  type        = bool
-  default     = false
-}
-
 variable "acr_pull_access" {
   description = "map of ACR ids to allow AcrPull"
   type        = map
