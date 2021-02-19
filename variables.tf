@@ -146,6 +146,12 @@ variable "windows_profile_admin_password" {
   default     = ""
 }
 
+variable "route_table_id" {
+  type = string
+  default = null
+  description = "The name of the route_table to scope the UAI to"
+}
+
 variable "enable_kube_dashboard" {
   description = "enable kubernetes dashboard"
   type        = bool
