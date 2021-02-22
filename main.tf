@@ -19,12 +19,14 @@ resource "azurerm_user_assigned_identity" "route_table_uai" {
 
 resource "azurerm_role_assignment" "route_table_role_network_contributor" {
   count                = var.aks_managed_vnet ? 0 : 1
+
   scope                = format("/subscriptions/%s/resourceGroups/%s", var.subscription, var.resource_group_name)
   role_definition_name = "Network Contributor"
   principal_id         = azurerm_user_assigned_identity.route_table_uai[0].principal_id
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
+  depends_on           = [azurerm_role_assignment.route_table_role_network_contributor]
   name                 = local.cluster_name
   location             = var.location
   resource_group_name  = var.resource_group_name
@@ -71,7 +73,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dynamic "identity" {
     for_each = var.use_service_principal ? [] : [1]
     content {
-      type                      = var.aks_managed_vnet ? "SystemAssigned" : "UserAssigned" 
+      type                      = var.aks_managed_vnet ? "SystemAssigned" : "UserAssigned"
       user_assigned_identity_id = var.aks_managed_vnet ? null : azurerm_user_assigned_identity.route_table_uai[0].id
     }
   }
